@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>Reactivar dispositivos de Alumbrado Inteligente</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container px-5">
+			<a class="navbar-brand" th:href="@{/index}">UNLa - GRUPO 18</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" href="/index">INICIO</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/dispositivo/alumbrado}">VOLVER ATRÁS</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<h1 class="mt-4">Lista de dispositivos inactivos - dados de baja</h1>
+
+		<div th:if="${mensaje}" class="alert alert-success mt-4" role="alert">
+			<strong th:text="${mensaje}"></strong>
+		</div>
+
+		<table class="table mt-4">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Estado</th>
+					<th>Acción</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="dispositivo : ${dispositivos}">
+					<td th:text="${dispositivo.idDispositivo}"></td>
+					<td th:text="${dispositivo.nombreDispositivo}"></td>
+					<td>
+						<span th:if="${dispositivo.isBaja}">DADO DE BAJA/INACTIVO</span>
+						<span th:if="${!dispositivo.isBaja}" th:text="${dispositivo.isBaja}"></span>
+					</td>
+					<td>
+						<form th:action="@{/dispositivo/alumbrado/reactivar/{id}(id=${dispositivo.idDispositivo})}"
+							method="post">
+							<button type="submit" class="btn btn-success">Reactivar dispositivo</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="mb-4 text-center">
+			<a th:href="@{/dispositivo/alumbrado}" class="btn btn-primary">Volver</a>
+		</div>
+	</div>
+
+
+	<!-- Bootstrap core JS-->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
